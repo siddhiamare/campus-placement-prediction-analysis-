@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PlaceMe – AI Campus Placement Predictor</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SIDEBAR NAV -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">Place<span>Me</span></div>
+  <nav class="sidebar-nav">
+    <a class="nav-item active" data-page="predictor" onclick="showPage('predictor',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Predictor
+    </a>
+    <a class="nav-item" data-page="ai-coach" onclick="showPage('ai-coach',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      AI Coach
+    </a>
+    <a class="nav-item" data-page="resume" onclick="showPage('resume',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Resume AI
+    </a>
+    <a class="nav-item" data-page="mock" onclick="showPage('mock',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Mock Interview
+    </a>
+    <a class="nav-item" data-page="roadmap" onclick="showPage('roadmap',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Roadmap
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="api-status" id="apiStatus">
+      <span class="dot-pulse"></span> AI Ready
+    </div>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<div class="mob-header">
+  <button class="mob-menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="mob-logo">Place<span>Me</span></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+  <!-- ======================== PAGE: PREDICTOR ======================== -->
+  <div class="page active" id="page-predictor">
+    <div class="page-header">
+      <div>
+        <h1>Placement Predictor</h1>
+        <p class="page-sub">AI-powered probability engine based on 8 key parameters</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <!-- Form -->
+      <div class="form-panel">
+        <div class="card">
+          <div class="card-title">Your Academic Profile</div>
+
+          <div class="year-tabs" id="yearTabs">
+            <button class="ytab active" onclick="setYear(this,'2nd')">2nd Year</button>
+            <button class="ytab" onclick="setYear(this,'3rd')">3rd Year</button>
+            <button class="ytab" onclick="setYear(this,'Final')">Final Year</button>
+          </div>
+
+          <div class="form-group">
+            <label>CGPA <span class="val-badge" id="cgpaDisp">7.5</span></label>
+            <input type="range" class="slider" min="5" max="10" step="0.1" value="7.5" id="cgpa" oninput="updateSlider('cgpa','cgpaDisp','','1')"/>
+          </div>
+
+          <div class="form-group">
+            <label>10th % (SSC) <span class="val-badge" id="sscDisp">80%</span></label>
+            <input type="range" class="slider" min="40" max="100" step="1" value="80" id="ssc" oninput="updateSlider('ssc','sscDisp','%')"/>
+          </div>
+
+          <div class="form-group">
+            <label>12th % (HSC) <span class="val-badge" id="hscDisp">78%</span></label>
+            <input type="range" class="slider" min="40" max="100" step="1" value="78" id="hsc" oninput="updateSlider('hsc','hscDisp','%')"/>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Backlogs</label>
+              <select id="backlogs">
+                <option value="0">0 – Clean</option>
+                <option value="1">1 backlog</option>
+                <option value="2">2 backlogs</option>
+                <option value="3">3+ backlogs</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Internships</label>
+              <select id="intern">
+                <option value="0">None</option>
+                <option value="1">1 internship</option>
+                <option value="2">2+ internships</option>
+                <option value="3">PPO / Full-time</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Technical Skills <span class="hint">(select all you have)</span></label>
+            <div class="chips" id="skillChips">
+              <span class="chip" onclick="toggleChip(this)">DSA</span>
+              <span class="chip" onclick="toggleChip(this)">Web Dev</span>
+              <span class="chip" onclick="toggleChip(this)">Python / ML</span>
+              <span class="chip" onclick="toggleChip(this)">SQL / DB</span>
+              <span class="chip" onclick="toggleChip(this)">System Design</span>
+              <span class="chip" onclick="toggleChip(this)">Cloud / DevOps</span>
+              <span class="chip" onclick="toggleChip(this)">Mobile Dev</span>
+              <span class="chip" onclick="toggleChip(this)">Cybersecurity</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>GitHub Projects</label>
+              <select id="projects">
+                <option value="0">None</option>
+                <option value="1">1–2 projects</option>
+                <option value="2">3–5 projects</option>
+                <option value="3">5+ projects</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Competitive Prog.</label>
+              <select id="cp">
+                <option value="0">Not active</option>
+                <option value="1">Beginner</option>
+                <option value="2">Intermediate</option>
+                <option value="3">Advanced</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="runPredict()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Predict My Placement Chance
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="resultPanel">
+        <div class="card result-placeholder" id="emptyState">
+          <div class="placeholder-icon">🎯</div>
+          <div class="placeholder-title">Your Report Awaits</div>
+          <div class="placeholder-sub">Complete the form and run prediction to see your detailed placement analysis</div>
+        </div>
+
+        <div id="resultContent" style="display:none">
+          <div class="card score-card">
+            <div class="score-ring-wrap">
+              <svg class="score-ring" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" fill="none" stroke="#1a2235" stroke-width="10"/>
+                <circle cx="60" cy="60" r="50" fill="none" stroke-width="10"
+                  stroke-linecap="round"
+                  stroke-dasharray="314"
+                  stroke-dashoffset="314"
+                  id="scoreCircle"
+                  transform="rotate(-90 60 60)"/>
+              </svg>
+              <div class="score-center">
+                <div class="score-num" id="scoreNum">0%</div>
+                <div class="score-lbl">probability</div>
+              </div>
+            </div>
+            <div class="verdict-box" id="verdictBox"></div>
+            <div class="score-bars">
+              <div class="sbar-row">
+                <span class="sbar-label">Academics</span>
+                <div class="sbar-bg"><div class="sbar-fill blue" id="barAcad"></div></div>
+                <span class="sbar-pct" id="barAcadPct">0%</span>
+              </div>
+              <div class="sbar-row">
+                <span class="sbar-label">Technical</span>
+                <div class="sbar-bg"><div class="sbar-fill purple" id="barTech"></div></div>
+                <span class="sbar-pct" id="barTechPct">0%</span>
+              </div>
+              <div class="sbar-row">
+                <span class="sbar-label">Industry</span>
+                <div class="sbar-bg"><div class="sbar-fill green" id="barInd"></div></div>
+                <span class="sbar-pct" id="barIndPct">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:1rem">
+            <div class="card-title">AI Insights</div>
+            <div id="insightsList"></div>
+            <button class="btn-secondary" style="margin-top:1rem;width:100%" onclick="getAIAnalysis()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Get Full AI Analysis
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE: AI COACH ======================== -->
+  <div class="page" id="page-ai-coach">
+    <div class="page-header">
+      <div>
+        <h1>AI Career Coach</h1>
+        <p class="page-sub">Ask anything about placements, career, skills — get instant AI-powered advice</p>
+      </div>
+    </div>
+
+    <div class="chat-layout">
+      <div class="chat-window" id="chatWindow">
+        <div class="chat-welcome">
+          <div class="ai-avatar">AI</div>
+          <div class="chat-bubble ai-bubble">
+            Hi! I'm your AI placement coach. I can help you with:<br><br>
+            • Resume tips &amp; improvements<br>
+            • Interview preparation strategies<br>
+            • Which companies to target based on your profile<br>
+            • Skill gap analysis &amp; learning roadmaps<br>
+            • Aptitude &amp; coding round guidance<br><br>
+            What would you like to work on today?
+          </div>
+        </div>
+        <div id="chatMessages"></div>
+        <div class="typing-indicator" id="typingIndicator" style="display:none">
+          <div class="ai-avatar sm">AI</div>
+          <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <div class="quick-prompts">
+        <button class="qprompt" onclick="sendQuick(this.textContent)">What companies should I target with 7.5 CGPA?</button>
+        <button class="qprompt" onclick="sendQuick(this.textContent)">How do I prepare for TCS NQT exam?</button>
+        <button class="qprompt" onclick="sendQuick(this.textContent)">Give me a 30-day placement preparation plan</button>
+        <button class="qprompt" onclick="sendQuick(this.textContent)">What projects should I add to my resume?</button>
+        <button class="qprompt" onclick="sendQuick(this.textContent)">Tips for HR interview round</button>
+      </div>
+
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatInput" placeholder="Ask your placement coach anything..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+        <button class="chat-send" onclick="sendChat()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE: RESUME AI ======================== -->
+  <div class="page" id="page-resume">
+    <div class="page-header">
+      <div>
+        <h1>Resume AI Analyzer</h1>
+        <p class="page-sub">Paste your resume text and get instant ATS score + AI suggestions</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <div class="card-title">Paste Your Resume</div>
+          <textarea id="resumeText" class="resume-textarea" placeholder="Paste your resume content here...&#10;&#10;Example:&#10;John Doe | john@email.com | GitHub: github.com/john&#10;&#10;EDUCATION&#10;B.Tech Computer Science, ABC College, 2024&#10;CGPA: 8.2/10&#10;&#10;EXPERIENCE&#10;SDE Intern – XYZ Startup (May–July 2023)&#10;• Built REST API using Node.js + Express&#10;• Reduced page load time by 40%&#10;&#10;PROJECTS&#10;1. E-commerce Platform (React, Node, MongoDB)&#10;..."></textarea>
+          <div style="display:flex;gap:10px;margin-top:1rem">
+            <button class="btn-primary" style="flex:1" onclick="analyzeResume()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Analyze Resume
+            </button>
+            <button class="btn-secondary" onclick="loadSampleResume()">Load Sample</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" id="resumeResult">
+          <div class="placeholder-icon" style="font-size:2rem;text-align:center;padding:2rem 0">📄</div>
+          <div class="placeholder-title">Analysis will appear here</div>
+          <div class="placeholder-sub">Paste your resume and click Analyze</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE: MOCK INTERVIEW ======================== -->
+  <div class="page" id="page-mock">
+    <div class="page-header">
+      <div>
+        <h1>Mock Interview</h1>
+        <p class="page-sub">AI conducts a real placement interview — technical + HR rounds</p>
+      </div>
+    </div>
+
+    <div class="interview-layout">
+      <div class="card interview-setup" id="interviewSetup">
+        <div class="card-title">Configure Your Interview</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Interview Type</label>
+            <select id="interviewType">
+              <option value="technical">Technical (DSA + CS Fundamentals)</option>
+              <option value="hr">HR Round</option>
+              <option value="system">System Design</option>
+              <option value="full">Full Stack (Tech + HR)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Target Company</label>
+            <select id="targetCompany">
+              <option value="product">Product Company (Google/MS level)</option>
+              <option value="service">Service Company (TCS/Infosys/Wipro)</option>
+              <option value="startup">Startup (Series A/B)</option>
+              <option value="mnc">MNC (Accenture/IBM/Cognizant)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="candidateName" class="text-input" placeholder="Enter your name" value=""/>
+        </div>
+        <button class="btn-primary" onclick="startInterview()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Start Mock Interview
+        </button>
+      </div>
+
+      <div class="interview-session" id="interviewSession" style="display:none">
+        <div class="interview-header">
+          <div>
+            <div class="interview-title" id="sessionTitle">Technical Interview</div>
+            <div class="interview-sub" id="sessionSub">Question 1 of ~8</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div class="q-counter" id="qCounter">Q1</div>
+            <button class="btn-secondary sm" onclick="endInterview()">End Interview</button>
+          </div>
+        </div>
+
+        <div class="interview-chat" id="interviewChat"></div>
+
+        <div class="interview-input-row">
+          <textarea class="chat-input" id="interviewAnswer" placeholder="Type your answer here... (Shift+Enter for new line)" rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitAnswer()}"></textarea>
+          <button class="chat-send" onclick="submitAnswer()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE: ROADMAP ======================== -->
+  <div class="page" id="page-roadmap">
+    <div class="page-header">
+      <div>
+        <h1>AI Study Roadmap</h1>
+        <p class="page-sub">Tell me about yourself — get a personalized week-by-week plan</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Generate My Roadmap</div>
+        <div class="form-group">
+          <label>Months Until Campus Placement</label>
+          <select id="rmMonths">
+            <option value="2">2 months</option>
+            <option value="3">3 months</option>
+            <option value="6" selected>6 months</option>
+            <option value="12">12 months</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Weakest Area</label>
+          <select id="rmWeak">
+            <option value="dsa">DSA / Problem Solving</option>
+            <option value="cs">CS Fundamentals (OS, DBMS, CN)</option>
+            <option value="projects">Projects / Portfolio</option>
+            <option value="aptitude">Aptitude / Verbal</option>
+            <option value="communication">Communication / Soft Skills</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Daily Study Time</label>
+          <select id="rmTime">
+            <option value="1">1 hour/day</option>
+            <option value="2" selected>2–3 hours/day</option>
+            <option value="4">4–5 hours/day</option>
+            <option value="6">6+ hours/day</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Target Role</label>
+          <select id="rmRole">
+            <option value="sde">Software Developer (SDE)</option>
+            <option value="analyst">Business Analyst / Consultant</option>
+            <option value="data">Data Analyst / Data Scientist</option>
+            <option value="devops">DevOps / Cloud Engineer</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="generateRoadmap()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Generate AI Roadmap
+        </button>
+      </div>
+
+      <div class="card" id="roadmapOutput">
+        <div class="placeholder-icon" style="font-size:2rem;text-align:center;padding:2rem 0">🗺️</div>
+        <div class="placeholder-title">Your roadmap will appear here</div>
+        <div class="placeholder-sub">Configure your profile and generate a personalized plan</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

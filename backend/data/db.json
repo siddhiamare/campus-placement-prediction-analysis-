@@ -1,0 +1,70 @@
+{
+  "profiles": {
+    "user_owcbplnt": [
+      {
+        "cgpa": 7.9,
+        "ssc": 78,
+        "hsc": 57,
+        "backlogs": 0,
+        "intern": 2,
+        "projects": 2,
+        "cp": 0,
+        "skills": 3,
+        "skillNames": [
+          "DSA",
+          "Web Dev",
+          "SQL / DB"
+        ],
+        "year": "2nd",
+        "probability": 56,
+        "id": "1578b348-2ea1-442a-b4b2-68a75d2a1ad8",
+        "saved_at": "2026-05-24T17:18:12.216860"
+      },
+      {
+        "cgpa": 7.9,
+        "ssc": 78,
+        "hsc": 57,
+        "backlogs": 0,
+        "intern": 2,
+        "projects": 2,
+        "cp": 0,
+        "skills": 3,
+        "skillNames": [
+          "DSA",
+          "Web Dev",
+          "SQL / DB"
+        ],
+        "year": "2nd",
+        "probability": 56,
+        "id": "430dddcf-9c2a-49f5-8580-9499332a8d09",
+        "saved_at": "2026-05-24T17:18:19.715259"
+      }
+    ]
+  },
+  "chats": {
+    "session_3deuript": [
+      {
+        "role": "user",
+        "content": "What companies should I target with 7.5 CGPA?",
+        "timestamp": "2026-05-24T17:18:32.022760"
+      },
+      {
+        "role": "assistant",
+        "content": "\u2022 Moderate profile (60%) \u2014 well-suited for service companies (TCS, Infosys, Wipro, Capgemini) and mid-size tech firms.\n\u2022 CGPA 7.0 is decent \u2014 you qualify for most drives. Some premium companies require 7.5+, so compensate with strong projects.\n\u2022 Clean academic record with no backlogs \u2014 this keeps all opportunities open for you.\n\u2022 KEY SKILL GAP: No internship and minimal projects \u2014 build 2 deployed projects immediately (e.g., a full-stack web app + one ML or data project). Host them on GitHub with a live demo.\n\u2022 Improve competitive programming: solve 2 LeetCode problems daily focusing on Arrays, Trees, and DP \u2014 these cover 70% of OA rounds.",
+        "timestamp": "2026-05-24T17:18:32.029300"
+      }
+    ],
+    "interview_f418mnd0": [
+      {
+        "role": "user",
+        "content": "Start the interview.",
+        "timestamp": "2026-05-24T17:18:52.324001"
+      },
+      {
+        "role": "assistant",
+        "content": "Hello siddhi, welcome to your mock interview! I'll be conducting a technical interview today. We'll go through about 8 questions, gradually increasing in depth. Feel free to think aloud \u2014 that's encouraged. Let's begin.\n\n**Question 1:** Tell me about yourself and why you want to be a software engineer.",
+        "timestamp": "2026-05-24T17:18:52.332016"
+      }
+    ]
+  }
+}
