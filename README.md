@@ -53,4 +53,12 @@ This platform provides data-driven insights, personalized recommendations, and p
 - 🗺️ Personalized Study Roadmap
 - 🔒 100% Local & Offline Processing
 
+---
 
+## 👨‍💻 Built By
+
+**Siddhi A**
+
+Machine Learning • Artificial Intelligence • Data Analytics • Software Development
+
+⭐ Feel free to explore, fork, or contribute to this project.
