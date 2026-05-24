@@ -61,4 +61,10 @@ This platform provides data-driven insights, personalized recommendations, and p
 
 Machine Learning • Artificial Intelligence • Data Analytics • Software Development
 
+## 🌐 Access Application
+
+After running the project locally, open:
+
+http://localhost:5000
+
 ⭐ Feel free to explore, fork, or contribute to this project.
