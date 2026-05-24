@@ -26,18 +26,18 @@ AI-powered campus placement predictor with a real Python Flask backend.
 🚀 Live Demo
 Open http://localhost:5000 after running the server — the frontend is served directly by Flask.
 
-**# 1. Clone the repository
+# 1. Clone the repository
 git clone https://github.com/yourusername/placeme-flask.git
 cd placeme-flask/backend
 
-**# 2. Create a virtual environment
+# 2. Create a virtual environment
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 
-**# 3. Install dependencies (just 2 packages)
+# 3. Install dependencies (just 2 packages)
 pip install -r requirements.txt
 
-**# 4. Run the server
+# 4. Run the server
 python app.py
 
 **🗣️ Built For
