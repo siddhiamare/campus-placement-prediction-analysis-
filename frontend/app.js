@@ -3,7 +3,7 @@
    All API calls go to the Flask backend (http://localhost:5000)
    ============================================================ */
 
-const API_BASE = "http://localhost:5000/api";   // ← change to your deployed URL in production
+const API_BASE = "/api";;   // ← change to your deployed URL in production
 
 // ─── GLOBAL STATE ─────────────────────────────────────────────
 const state = {
